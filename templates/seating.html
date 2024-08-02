@@ -1,0 +1,958 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Krishna cineplex | {{show.movi.name}} </title>
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/seats.css' %}">
+<style>
+  .screen {
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0.5;
+    margin: 0 auto;
+    margin-bottom: -15px;
+    background-position: center;
+    transform: perspective(5000px) rotateX(-40deg);
+    overflow: hidden;
+    background-image: url({{show.movi.poster1.url}});
+    box-shadow: 0 40px 55px -17px rgba(255, 255, 255, 0.2);
+  }
+
+
+  .seat_dis {
+    width: 39.6px;
+    height: 44px;
+    border-radius: 4px 4px 8px 8px;
+    background: #a6a1a1;
+    background: linear-gradient(#969191 0%, #969191 70%, #000 70%, #969191 77%);
+    position: relative;
+    border: 1px solid #000;
+    margin: 5px;
+    display: inline-block;
+  }
+
+  #confirm {
+    display: none;
+  }
+
+  .seat_dis:after,
+  .seat_dis:before {
+    content: '';
+    display: block;
+    width: 7.3333333333px;
+    height: 24.4444444444px;
+    position: absolute;
+    background: #969191;
+    border-radius: 4px;
+    border: 1px solid #000;
+    bottom: 5.5px;
+  }
+
+  .seat_dis:before {
+    left: -4.4px;
+  }
+
+  .seat_dis:after {
+    right: -4.4px;
+  }
+
+  .seat_selec {
+    width: 39.6px;
+    height: 44px;
+    border-radius: 4px 4px 8px 8px;
+    background: #a6a1a1;
+    background: linear-gradient(#125202 0%, #125202 70%, #000 70%, #125202 77%);
+    position: relative;
+    border: 1px solid #000;
+    margin: 5px;
+    display: inline-block;
+  }
+
+  .seat_selec:after,
+  .seat_selec:before {
+    content: '';
+    display: block;
+    width: 7.3333333333px;
+    height: 24.4444444444px;
+    position: absolute;
+    background: #125202;
+    border-radius: 4px;
+    border: 1px solid #000;
+    bottom: 5.5px;
+  }
+
+
+  .seat_selec:before {
+    left: -4.4px;
+  }
+
+  .seat_selec:after {
+    right: -4.4px;
+  }
+
+  .hall {
+    margin-top: -100px;
+    padding: 80px 0px 600px;
+    background-size: contain;
+    background-repeat: no-repeat;
+
+  }
+
+  .scre {
+    padding-top: 220px;
+    height: 40px;
+  }
+</style>
+{% endblock %}
+
+
+
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 hall"
+      style="background-image:linear-gradient(rgba(0,0,0,.9),rgba(0,0,0,.8)),url({{show.movi.poster1.url}})">
+      <form action="{% url  'boookingverify' %}" method="POST" id="book">
+
+        {% csrf_token %}
+        <input type="text" value="{{show.movi.pk}}" name="movi_nameid" readonly hidden>
+        <input type="text" value="{{show.movi}}" name="movi_name" readonly hidden>
+        <input type="text" value="{{show.shows}}" name="show" readonly hidden>
+
+
+
+        <div class="scre">
+          <div class="seats">
+
+            <div class="row">
+              <h3 class="text-white m-2">A</h3>
+
+              {% if movibook.a1 == True %}
+              <div class="seat_dis" id="A1">
+                <input type="checkbox" value="#A1" id="seatA1" name="A1" />
+                <label for="seatA1"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="A1">
+                <input type="checkbox" value="#A1" id="seatA1" name="A1" />
+                <label for="seatA1"></label>
+              </div>
+              {% endif %}
+
+
+              {% if movibook.a2 == True %}
+              <div class="seat_dis" id="A2">
+                <input type="checkbox" value="#A2" id="seatA1" name="A2" />
+                <label for="seatA2"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="A2">
+                <input type="checkbox" value="#A2" id="seatA2" name="A2" />
+                <label for="seatA2"></label>
+              </div>
+              {% endif %}
+
+
+              <div class="space"></div>
+
+              {% if movibook.a3 == True %}
+              <div class="seat_dis" id="A3">
+                <input type="checkbox" value="#A3" id="seatA3" name="A3" />
+                <label for="seatA3"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="A3">
+                <input type="checkbox" value="#A3" id="seatA3" name="A3" />
+                <label for="seatA3"></label>
+              </div>
+              {% endif %}
+
+              {% if movibook.a4 == True %}
+              <div class="seat_dis" id="A1">
+                <input type="checkbox" value="#A1" id="seatA1" name="A1" />
+                <label for="seatA1"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="A4">
+                <input type="checkbox" value="#A4" id="seatA4" name="A4" />
+                <label for="seatA4"></label>
+              </div>
+              {% endif %}
+
+
+              {% if movibook.a5 == True %}
+              <div class="seat_dis" id="A5">
+                <input type="checkbox" value="#A5" id="seatA5" name="A5" />
+                <label for="seatA5"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="A5">
+                <input type="checkbox" value="#A5" id="seatA5" name="A5" />
+                <label for="seatA5"></label>
+              </div>
+              {% endif %}
+
+
+              {% if movibook.a6 == True %}
+              <div class="seat_dis" id="A6">
+                <input type="checkbox" value="#A6" id="seatA6" name="A6" />
+                <label for="seatA6"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="A6">
+                <input type="checkbox" value="#A6" id="seatA6" name="A6" />
+                <label for="seatA6"></label>
+              </div>
+              {% endif %}
+
+              {% if movibook.a7 == True %}
+              <div class="seat_dis" id="A7">
+                <input type="checkbox" value="#A7" id="seatA7" name="A7" />
+                <label for="seatA7"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="A7">
+                <input type="checkbox" value="#A7" id="seatA7" name="A7" />
+                <label for="seatA7"></label>
+              </div>
+              {% endif %}
+
+
+
+              {% if movibook.a8 == True %}
+              <div class="seat_dis" id="A8">
+                <input type="checkbox" value="#A8" id="seatA8" name="A8" />
+                <label for="seatA8"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="A8">
+                <input type="checkbox" value="#A8" id="seatA8" name="A8" />
+                <label for="seatA8"></label>
+              </div>
+              {% endif %}
+
+              <div class="space"></div>
+
+              {% if movibook.a9 == True %}
+              <div class="seat_dis" id="A9">
+                <input type="checkbox" value="#A9" id="seatA9" name="A9" />
+                <label for="seatA9"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="A9">
+                <input type="checkbox" value="#A9" id="seatA9" name="A9" />
+                <label for="seatA9"></label>
+              </div>
+              {% endif %}
+
+              {% if movibook.a10 == True %}
+              <div class="seat_dis" id="A10">
+                <input type="checkbox" value="#A10" id="seatA10" name="A10" />
+                <label for="seatA10"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="A10">
+                <input type="checkbox" value="#A10" id="seatA10" name="A10" />
+                <label for="seatA10"></label>
+              </div>
+              {% endif %}
+            </div>
+
+            <div class="row">
+              <h3 class="text-white m-2">B</h3>
+
+
+              {% if movibook.b1 == True %}
+              <div class="seat_dis" id="B1">
+                <input type="checkbox" value="#B1" id="seatB1" name="B1" />
+                <label for="seatB1"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="B1">
+                <input type="checkbox" value="#B1" id="seatB1" name="B1" />
+                <label for="seatB1"></label>
+              </div>
+              {% endif %}
+
+
+              {% if movibook.b2 == True %}
+              <div class="seat_dis" id="B2">
+                <input type="checkbox" value="#B2" id="seatB2" name="B2" />
+                <label for="seatB2"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="B2">
+                <input type="checkbox" value="#B2" id="seatB2" name="B2" />
+                <label for="seatB2"></label>
+              </div>
+              {% endif %}
+
+
+              <div class="space"></div>
+
+
+              {% if movibook.b3 == True %}
+              <div class="seat_dis" id="B3">
+                <input type="checkbox" value="#B3" id="seatB3" name="B3" />
+                <label for="seatB3"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="B3">
+                <input type="checkbox" value="#B3" id="seatB3" name="B3" />
+                <label for="seatB3"></label>
+              </div>
+              {% endif %}
+
+
+              {% if movibook.b4 == True %}
+              <div class="seat_dis" id="B4">
+                <input type="checkbox" value="#B4" id="seatB4" name="B4" />
+                <label for="seatB4"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="B4">
+                <input type="checkbox" value="#B4" id="seatB4" name="B4" />
+                <label for="seatB4"></label>
+              </div>
+              {% endif %}
+
+
+              {% if movibook.b5 == True %}
+              <div class="seat_dis" id="B5">
+                <input type="checkbox" value="#B5" id="seatB5" name="B5" />
+                <label for="seatB5"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="B5">
+                <input type="checkbox" value="#B5" id="seatB5" name="B5" />
+                <label for="seatB5"></label>
+              </div>
+              {% endif %}
+
+
+              {% if movibook.b6 == True %}
+              <div class="seat_dis" id="B6">
+                <input type="checkbox" value="#B6" id="seatB6" name="B6" />
+                <label for="seatB6"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="B6">
+                <input type="checkbox" value="#B6" id="seatB6" name="B6" />
+                <label for="seatB6"></label>
+              </div>
+              {% endif %}
+
+
+
+              {% if movibook.b7 == True %}
+              <div class="seat_dis" id="B7">
+                <input type="checkbox" value="#B7" id="seatB7" name="B7" />
+                <label for="seatB7"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="B7">
+                <input type="checkbox" value="#B7" id="seatB7" name="B7" />
+                <label for="seatB7"></label>
+              </div>
+              {% endif %}
+
+
+
+              {% if movibook.b8 == True %}
+              <div class="seat_dis" id="B8">
+                <input type="checkbox" value="#B8" id="seatB8" name="B8" />
+                <label for="seatB8"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="B8">
+                <input type="checkbox" value="#B8" id="seatB8" name="B8" />
+                <label for="seatB8"></label>
+              </div>
+              {% endif %}
+
+
+              <div class="space"></div>
+
+
+              {% if movibook.b9 == True %}
+              <div class="seat_dis" id="B9">
+                <input type="checkbox" value="#B1" id="seatB9" name="B9" />
+                <label for="seatB9"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="B9">
+                <input type="checkbox" value="#B9" id="seatB9" name="B9" />
+                <label for="seatB9"></label>
+              </div>
+              {% endif %}
+
+
+
+              {% if movibook.b10 == True %}
+              <div class="seat_dis" id="B10">
+                <input type="checkbox" value="#B10" id="seatB10" name="B10" />
+                <label for="seatB10"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="B10">
+                <input type="checkbox" value="#B10" id="seatB10" name="B10" />
+                <label for="seatB10"></label>
+              </div>
+              {% endif %}
+            </div>
+
+            <div class="row">
+              <h3 class="text-white m-2">C</h3>
+
+
+              {% if movibook.c1 == True %}
+              <div class="seat_dis" id="C">
+                <input type="checkbox" value="#C1" id="seatC" name="C" />
+                <label for="seatB1"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="C1">
+                <input type="checkbox" value="#C1" id="seatC1" name="C1" />
+                <label for="seatC1"></label>
+              </div>
+              {% endif %}
+
+              {% if movibook.c2 == True %}
+              <div class="seat_dis" id="C">
+                <input type="checkbox" value="#C1" id="seatC" name="C" />
+                <label for="seatB1"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="C2">
+                <input type="checkbox" value="#C2" id="seatC2" name="C2" />
+                <label for="seatC2"></label>
+              </div>
+              {% endif %}
+
+              <div class="space"></div>
+
+              {% if movibook.c3 == True %}
+              <div class="seat_dis" id="C">
+                <input type="checkbox" value="#C1" id="seatC" name="C" />
+                <label for="seatB1"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="C3">
+                <input type="checkbox" value="#C3" id="seatC3" name="C3" />
+                <label for="seatC3"></label>
+              </div>
+              {% endif %}
+
+              {% if movibook.c4 == True %}
+              <div class="seat_dis" id="C">
+                <input type="checkbox" value="#C1" id="seatC" name="C" />
+                <label for="seatB1"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="C4">
+                <input type="checkbox" value="#C4" id="seatC4" name="C4" />
+                <label for="seatC4"></label>
+              </div>
+              {% endif %}
+
+
+              {% if movibook.c5 == True %}
+              <div class="seat_dis" id="C">
+                <input type="checkbox" value="#C1" id="seatC" name="C" />
+                <label for="seatB1"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="C5">
+                <input type="checkbox" value="#C5" id="seatC5" name="C5" />
+                <label for="seatC5"></label>
+              </div>
+              {% endif %}
+
+
+              {% if movibook.c6 == True %}
+              <div class="seat_dis" id="C">
+                <input type="checkbox" value="#C1" id="seatC" name="C" />
+                <label for="seatB1"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="C6">
+                <input type="checkbox" value="#C6" id="seatC6" name="C6" />
+                <label for="seatC6"></label>
+              </div>
+              {% endif %}
+
+              {% if movibook.c7 == True %}
+              <div class="seat_dis" id="C">
+                <input type="checkbox" value="#C1" id="seatC" name="C" />
+                <label for="seatB1"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="C7">
+                <input type="checkbox" value="#C7" id="seatC7" name="C7" />
+                <label for="seatC7"></label>
+              </div>
+              {% endif %}
+
+
+              {% if movibook.c8 == True %}
+              <div class="seat_dis" id="C">
+                <input type="checkbox" value="#C1" id="seatC" name="C" />
+                <label for="seatB1"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="C8">
+                <input type="checkbox" value="#C8" id="seatC8" name="C8" />
+                <label for="seatC8"></label>
+              </div>
+              {% endif %}
+
+              <div class="space"></div>
+
+
+              {% if movibook.c9 == True %}
+              <div class="seat_dis" id="C">
+                <input type="checkbox" value="#C1" id="seatC" name="C" />
+                <label for="seatB1"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="C9">
+                <input type="checkbox" value="#C9" id="seatC9" name="C9" />
+                <label for="seatC9"></label>
+              </div>
+              {% endif %}
+
+
+              {% if movibook.c10 == True %}
+              <div class="seat_dis" id="C10">
+                <input type="checkbox" value="#C10" id="seatC10" name="C10" />
+                <label for="seatC10"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="C10">
+                <input type="checkbox" value="#C10" id="seatC10" name="C10" />
+                <label for="seatC10"></label>
+              </div>
+              {% endif %}
+            </div>
+
+            <div class="row">
+              <h3 class="text-white m-2">D</h3>
+
+              {% if movibook.d1 == True %}
+              <div class="seat_dis" id="D1">
+                <input type="checkbox" value="#D1" id="seatD1" name="D1" />
+                <label for="seatD1"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="D1">
+                <input type="checkbox" value="#D1" id="seatD1" name="D1" />
+                <label for="seatD1"></label>
+              </div>
+              {% endif %}
+
+              {% if movibook.d2 == True %}
+              <div class="seat_dis" id="C">
+                <input type="checkbox" value="#C1" id="seatC" name="C" />
+                <label for="seatB1"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="D2">
+                <input type="checkbox" value="#D2" id="seatD2" name="D2" />
+                <label for="seatD2"></label>
+              </div>
+              {% endif %}
+
+              <div class="space"></div>
+
+              {% if movibook.d3 == True %}
+              <div class="seat_dis" id="C">
+                <input type="checkbox" value="#C1" id="seatC" name="C" />
+                <label for="seatB1"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="D3">
+                <input type="checkbox" value="#D3" id="seatD3" name="D3" />
+                <label for="seatD3"></label>
+              </div>
+              {% endif %}
+
+              {% if movibook.d4 == True %}
+              <div class="seat_dis" id="C">
+                <input type="checkbox" value="#C1" id="seatC" name="C" />
+                <label for="seatB1"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="D4">
+                <input type="checkbox" value="#D4" id="seatD4" name="D4" />
+                <label for="seatD4"></label>
+              </div>
+              {% endif %}
+
+
+              {% if movibook.d5 == True %}
+              <div class="seat_dis" id="C">
+                <input type="checkbox" value="#C1" id="seatC" name="C" />
+                <label for="seatB1"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="D5">
+                <input type="checkbox" value="#D5" id="seatD5" name="D5" />
+                <label for="seatD5"></label>
+              </div>
+              {% endif %}
+
+              {% if movibook.d6 == True %}
+              <div class="seat_dis" id="C">
+                <input type="checkbox" value="#C1" id="seatC" name="C" />
+                <label for="seatB1"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="D6">
+                <input type="checkbox" value="#D6" id="seatD6" name="D6" />
+                <label for="seatD6"></label>
+              </div>
+              {% endif %}
+
+
+              {% if movibook.d7 == True %}
+              <div class="seat_dis" id="C">
+                <input type="checkbox" value="#C1" id="seatC" name="C" />
+                <label for="seatB1"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="D7">
+                <input type="checkbox" value="#D7" id="seatD7" name="D7" />
+                <label for="seatD7"></label>
+              </div>
+              {% endif %}
+
+              {% if movibook.d8 == True %}
+              <div class="seat_dis" id="C">
+                <input type="checkbox" value="#C1" id="seatC" name="C" />
+                <label for="seatB1"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="D8">
+                <input type="checkbox" value="#D8" id="seatD8" name="D8" />
+                <label for="seatD8"></label>
+              </div>
+              {% endif %}
+
+              <div class="space"></div>
+
+              {% if movibook.d9 == True %}
+              <div class="seat_dis" id="C">
+                <input type="checkbox" value="#C1" id="seatC" name="C" />
+                <label for="seatB1"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="D9">
+                <input type="checkbox" value="#D9" id="seatD9" name="D9" />
+                <label for="seatD9"></label>
+              </div>
+              {% endif %}
+
+
+              {% if movibook.d10 == True %}
+              <div class="seat_dis" id="C">
+                <input type="checkbox" value="#C1" id="seatC" name="C" />
+                <label for="seatB1"></label>
+              </div>
+              {% else %}
+              <div class="seat" id="D10">
+                <input type="checkbox" value="#D10" id="seatD10" name="D10" />
+                <label for="seatD10"></label>
+              </div>
+              {% endif %}
+            </div>
+            &nbsp;
+            &nbsp;
+            <div class="row">
+              <div class="seat_dis" id="C">
+                <input type="checkbox" value="#C1" id="seatC" name="C" disabled />
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                <h6 style="color: aliceblue;font-size: 13px;">Booked</h4>
+              </div>
+              &nbsp;
+              &nbsp;
+
+              <div class="seat_selec" id="C">
+                <input type="checkbox" value="#C1" id="seatC" name="C" disabled />
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                <h6 style="color: aliceblue;font-size: 13px;">Selected</h4>
+              </div>
+              &nbsp;
+              &nbsp;
+
+              <div class="seat" id="C">
+                <input type="checkbox" id="seatC" name="C" disabled />
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                <h6 style="color: aliceblue;font-size: 13px;">Available</h4>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+    </div>
+  </div>
+  <div class="row bottom" style="background-color: transparent;">
+    <div class="col-9">
+      <h3 class="text-black">Selected Seats : <span id="slots" style="font-size:30px"></span></h1>
+        <h3 class="text-black">Total amount : <span id="amount" style="font-size:30px"></span></h1>
+          <input type="text" name="movidateid" value="{{date.id}}" hidden>
+          <input type="text" name="movidate" value="{{date.date}}" hidden>
+          <input type="text" name="movitimeid" value="{{show.time.id}}" hidden>
+          <input type="text" name="movitime" value="{{show.time}}" hidden>
+          <input type="hidden" id="hiddenAmount" name="amount" hidden>
+          <input type="number" name="price" id="price" value="{{show.price}}" hidden>
+
+
+    </div>
+    </form>
+    <div class="col-3" style="margin-top: 10px;">
+      {% if user.is_authenticated %}
+      <button type="submit" onclick="passValue()" form="book" class="btn btn-lg btn-block btn-danger " id="confirm">
+        Confirm Booking </button>
+      {% else %}
+      <a href="/login" class="btn btn-lg btn-block btn-danger"> Login To Book </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+
+
+
+</div>
+
+
+{% endblock %}
+
+{% block JQuery %}
+
+{% for seat in seat%}
+<script type="text/javascript">
+  $("{{seat.useat}}").addClass("notvacant").children("input").prop("disabled", true);
+  $("{{seat.useat}}").children("label").remove();
+</script>
+{% endfor %}
+
+<script type="text/javascript">
+  amount = document.getElementById('amount')
+
+
+  $(".seat").click(function () {
+    var favorite = [];
+    var amo = [];
+    var price = parseFloat($('#price').val());
+
+    $('#confirm').css('display', 'block');
+
+    $.each($("input[name='A1']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+
+    $.each($("input[name='A2']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+
+    $.each($("input[name='A3']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+
+    $.each($("input[name='A4']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+
+    $.each($("input[name='A5']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+
+    $.each($("input[name='A6']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+
+    $.each($("input[name='A7']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+
+    $.each($("input[name='A8']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+
+    $.each($("input[name='A9']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+
+    $.each($("input[name='A10']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+
+    $.each($("input[name='B1']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+
+    $.each($("input[name='B2']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+
+    $.each($("input[name='B3']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+    $.each($("input[name='B4']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+    $.each($("input[name='B5']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+    $.each($("input[name='B6']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+    $.each($("input[name='B7']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+    $.each($("input[name='B8']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+    $.each($("input[name='B9']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+    $.each($("input[name='B10']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+
+    $.each($("input[name='C1']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+    $.each($("input[name='C2']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+    $.each($("input[name='C3']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+    $.each($("input[name='C4']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+    $.each($("input[name='C5']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+    $.each($("input[name='C6']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+    $.each($("input[name='C7']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+    $.each($("input[name='C8']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+    $.each($("input[name='C9']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+    $.each($("input[name='C10']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+
+    $.each($("input[name='D1']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+    $.each($("input[name='D2']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+    $.each($("input[name='D3']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+    $.each($("input[name='D4']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+    $.each($("input[name='D5']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+    $.each($("input[name='D6']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+    $.each($("input[name='D7']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+    $.each($("input[name='D8']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+    $.each($("input[name='D9']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+    $.each($("input[name='D10']:checked"), function () {
+      favorite.push($(this).val());
+      amount.innerHTML = '<i class="fa fa-rupee"></i>' + favorite.length * price
+    });
+
+    $("#slots").empty().append(favorite.join(", "));
+
+  });
+
+  function passValue() {
+    var amount = document.getElementById('amount').textContent;
+    document.getElementById('hiddenAmount').value = amount;
+  }
+</script>
+
+
+{% endblock %}

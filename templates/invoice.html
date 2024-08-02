@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>BoxOffice | {{movi.name}}</title>
+{% endblock %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border: 1px solid #dddddd;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        color: #333;
+        margin-top: 0;
+    }
+
+    p {
+        margin: 10px 0;
+    }
+
+    .highlight {
+        font-weight: bold;
+        color: #007bff;
+    }
+</style>
+{% block style %}
+
+
+{% endblock %}
+<div class="container">
+    <h1>Booking Confirmation</h1>
+    <p>Thank you for your booking!</p>
+    <p><span class="highlight">Booking ID:</span> {{ bookid }}</p>
+    <p><span class="highlight">Movie Name:</span> {{ bookmoviname }}</p>
+    <p><span class="highlight">Seat:</span> {{ seat }}</p>
+    <p><span class="highlight">Price:</span> {{ price }}</p>
+    <p><span class="highlight">Date:</span> {{ date }}</p>
+</div>
+{% block content %}
+
+
+{% endblock %}
+
+
+{% block JQuery %}
+
+
+{% endblock %}

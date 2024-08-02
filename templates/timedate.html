@@ -1,0 +1,250 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Krishna cineplex | Bookings</title>
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/booking.css' %}" />
+<style>
+    .justify-content-center .container {
+        width: 80%;
+        margin: 0 auto;
+        background-color: rgba(47, 54, 54, 0.57);
+        ;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 16px 13px 40px #0a0000;
+        margin-top: 160px;
+        position: relative;
+        z-index: 1;
+
+    }
+
+
+    body {
+        background-image: url("{% static 'images/the.jpg' %}");
+        background-position: center;
+        background-size: cover;
+        height: 100vh;
+        background-repeat: no-repeat;
+    }
+
+    body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("{% static 'images/the.jpg' %}");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        filter: blur(10px);
+        z-index: -1;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .header h1 {
+        color: #333;
+        margin: 0;
+    }
+
+    .header .date {
+        color: #777;
+        font-size: 16px;
+    }
+
+    .movie {
+        border-bottom: 1px solid #e0e0e0;
+        padding: 10px 0;
+    }
+
+    .movie-title {
+        font-size: 18px;
+        color: #333;
+        margin: 0;
+    }
+
+    .movie-info {
+        color: #777;
+        font-size: 14px;
+    }
+
+    .showtimes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .showtime {
+        background-color: #4caf50;
+        color: #ffffff;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .showtime:hover {
+        background-color: #45a049;
+    }
+
+    .nav {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .first-element {
+        color: white;
+
+    }
+
+    .nav .nav-item {
+        margin: 0 5px;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        border: .1px solid rgb(255, 255, 255);
+        color: black;
+    }
+
+    .nav .nav-item:hover {
+        background-color: #ff5a5f;
+
+    }
+
+    .status {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+
+    .status .status-item {
+        display: flex;
+        align-items: center;
+    }
+
+    .status .status-item span {
+        margin-left: 5px;
+    }
+
+    .status .status-available {
+        color: green;
+    }
+
+    .status .status-fast-filling {
+        color: orange;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid box">
+    <div class="row justify-content-center">
+
+        <div class="container">
+            <div class="header">
+                <h1 style="color: white;">Krishna cineplex: pattambi</h1>
+                <p class="date" id="dateDisplay" style="color: white;">{{c_date}}</p>
+            </div>
+            <div class="nav">
+                {% for date in dates %}
+                <a href="{% url 'showdate' date.id movi.pk %}" style="text-decoration: none;">
+                    <div class="nav-item {% if forloop.first %} first-element  {% else %} otherelements inactive {% endif %}"
+                        style="color: white;">{{ date }}</div>
+                </a>
+                {% endfor %}
+                <hr>
+            </div>
+            <hr style="border-bottom: 1px solid #e0e0e0;">
+            <div class="status">
+                <div class="status-item status-available">
+                </div>
+                <div class="status-item status-fast-filling">
+                    {% if seatcount.seatcount >= 0 %}
+                    {% if seatcount.seatcount <= 20 %} <div
+                        style="width: 10px; height: 10px; background-color: green; border-radius: 50%;">
+                </div>
+                <span style="color: green;">AVAILABLE</span>
+                {% elif seatcount.seatcount <= 30 %} <div
+                    style="width: 10px; height: 10px; background-color: green; border-radius: 50%;">
+            </div>
+            <span style="color: green;">FAST FILLING</span>
+            {% endif %}
+            {% endif %}
+        </div>
+
+    </div>
+
+    <!-- Movie 1 -->
+    <div class="movie">
+        <p class="movie-title" style="color: white;">{{movi.name}}</p>
+        <p class="movie-info" style="color: white;">{{movi.language}}</p>
+        <div class="showtimes">
+
+            {% for j in show %}
+
+            <a href="/seat/{{j.shows}}/{{j.date.id}}/{{j.time.id}}/{{movi.pk}}" style="text-decoration: none;">
+                <div class="showtime" style="background-color:green">
+                    {{j.time}}
+                </div>
+            </a>
+            {% endfor %}
+
+        </div>
+    </div>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+
+{% block JQuery %}
+<script>
+    $(document).ready(function () {
+        // Event listener for nav items
+        $('.nav-item').click(function (e) {
+            e.preventDefault(); // Prevent the default link behavior
+
+            // Remove the 'active' class from all nav items
+            $('.first-element').removeClass('active').addClass('inactive');
+
+
+
+
+            // Add the 'active' class to the clicked nav item
+            $('.otherelements').removeClass('inactive').addClass('active');
+            window.location.href = $(this).parent('a').attr('href');
+
+
+
+
+
+
+
+
+        });
+    });
+</script>
+{% endblock %}
+{% endblock %}

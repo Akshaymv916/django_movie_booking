@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Krishna cineplex | Bookings</title>
+{% endblock %}
+
+{% block style %}
+
+<style>
+    body {
+        background-image: url(static/images/the.jpg);
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("{% static 'images/the.jpg' %}");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        filter: blur(10px);
+        z-index: -1;
+    }
+
+    .login h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .form-group select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+
+    .terms {
+        color: red;
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    .submit-btn {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        background-color: #FF4081;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        background-image: linear-gradient(45deg, #ce1212, #e77c24);
+        border-radius: 15px;
+        border: none;
+        width: 250px;
+        margin-top: 10px;
+    }
+
+    .submit-btn:hover {
+        background-color: #e60074;
+    }
+
+    .login {
+        background-color: rgba(47, 54, 54, 0.57);
+        height: 450px;
+        margin: 80px 40px;
+        border-radius: 30px;
+        padding: 50px;
+        margin-top: 120px;
+        box-shadow: 16px 13px 40px #0a0000;
+
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="form-group login">
+        <h1 style="color: aliceblue;">Contact Details</h1>
+
+        <form action="{% url 'verification' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group ">
+                <label for="email" style="color: aliceblue;">Your Email</label>
+                <input type="email" id="email" name="email" value="{{user.email}}" required>
+                <small>Your email will only be used for sending ticket</small>
+
+                <label for="mobile-number" style="color: aliceblue;">Mobile Number</label>
+                <input type="text" id="mobile-number" name="mobile" value="{{phone.phonenumber}}" required>
+
+                <small></small>
+
+                <input type="text" id="mobile-number" name="mtime" value="{{time}}" required hidden>
+                <input type="text" id="mobile-number" name="mtimeid" value="{{timeid}}" required hidden>
+                <input type="text" id="mobile-number" name="mdateid" value="{{dateid}}" required hidden>
+                <input type="text" id="mobile-number" name="mdate" value="{{date}}" required hidden>
+                <input type="text" id="mobile-number" name="mmovi" value="{{movi}}" required hidden>
+                <input type="text" id="mobile-number" name="mmoviid" value="{{movi_nameid}}" required hidden>
+
+                <input type="text" id="mobile-number" name="mprice" value="{{amount}}" required hidden>
+                <input type="text" id="mobile-number" name="mseat" value="{{useat}}" required hidden>
+                <input type="text" value="{{show}}" name="show" readonly hidden>
+
+
+                <input type="text" value="{{A1}}" id="seatA1" name="A1" hidden />
+                <input type="text" value="{{A2}}" id="seatA1" name="A2" hidden />
+                <input type="text" value="{{A3}}" id="seatA1" name="A3" hidden />
+                <input type="text" value="{{A4}}" id="seatA1" name="A4" hidden />
+                <input type="text" value="{{A5}}" id="seatA1" name="A5" hidden />
+                <input type="text" value="{{A6}}" id="seatA1" name="A6" hidden />
+                <input type="text" value="{{A7}}" id="seatA1" name="A7" hidden />
+                <input type="text" value="{{A8}}" id="seatA1" name="A8" hidden />
+                <input type="text" value="{{A9}}" id="seatA1" name="A9" hidden />
+                <input type="text" value="{{A10}}" id="seatA1" name="A10" hidden />
+
+
+                <input type="text" value="{{B1}}" id="seatA1" name="B1" hidden />
+                <input type="text" value="{{B2}}" id="seatA1" name="B2" hidden />
+                <input type="text" value="{{B3}}" id="seatA1" name="B3" hidden />
+                <input type="text" value="{{B4}}" id="seatA1" name="B4" hidden />
+                <input type="text" value="{{B5}}" id="seatA1" name="B5" hidden />
+                <input type="text" value="{{B6}}" id="seatA1" name="B6" hidden />
+                <input type="text" value="{{B7}}" id="seatA1" name="B7" hidden />
+                <input type="text" value="{{A8}}" id="seatA1" name="B8" hidden />
+                <input type="text" value="{{B9}}" id="seatA1" name="B9" hidden />
+                <input type="text" value="{{B10}}" id="seatA1" name="B10" hidden />
+
+                <input type="text" value="{{C1}}" id="seatA1" name="C1" hidden />
+                <input type="text" value="{{C2}}" id="seatA1" name="C2" hidden />
+                <input type="text" value="{{C3}}" id="seatA1" name="C3" hidden />
+                <input type="text" value="{{C4}}" id="seatA1" name="C4" hidden />
+                <input type="text" value="{{C5}}" id="seatA1" name="C5" hidden />
+                <input type="text" value="{{C6}}" id="seatA1" name="C6" hidden />
+                <input type="text" value="{{C7}}" id="seatA1" name="C7" hidden />
+                <input type="text" value="{{C8}}" id="seatA1" name="C8" hidden />
+                <input type="text" value="{{C9}}" id="seatA1" name="C9" hidden />
+                <input type="text" value="{{C10}}" id="seatA1" name="C10" hidden />
+
+                <input type="text" value="{{D1}}" id="seatA1" name="D1" hidden />
+                <input type="text" value="{{D2}}" id="seatA1" name="D2" hidden />
+                <input type="text" value="{{D3}}" id="seatA1" name="D3" hidden />
+                <input type="text" value="{{D4}}" id="seatA1" name="D4" hidden />
+                <input type="text" value="{{D5}}" id="seatA1" name="D5" hidden />
+                <input type="text" value="{{D6}}" id="seatA1" name="D6" hidden />
+                <input type="text" value="{{D7}}" id="seatA1" name="D7" hidden />
+                <input type="text" value="{{D8}}" id="seatA1" name="D8" hidden />
+                <input type="text" value="{{D9}}" id="seatA1" name="D9" hidden />
+                <input type="text" value="{{D10}}" id="seatA1" name="D10" hidden />
+
+
+
+
+
+
+
+
+
+
+                &nbsp;
+                <button type="submit" class="submit-btn">Submit</button>
+            </div>
+    </div>
+    </form>
+</div>
+{% endblock %}

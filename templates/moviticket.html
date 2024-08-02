@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>BoxOffice</title>
+{% endblock %}
+
+{% block style %}
+<style>
+  body {
+    background-image: url("{% static 'images/the.jpg' %}");
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+    background-repeat: no-repeat;
+  }
+
+  body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("{% static 'images/the.jpg' %}");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: blur(10px);
+    z-index: -1;
+  }
+
+  .container {
+    background-color: rgba(47, 54, 54, 0.57);
+    width: 50%;
+    margin-top: 150px;
+    max-width: 600px;
+    border-radius: 30px;
+    padding: 30px;
+    box-shadow: 16px 13px 40px #0a0000;
+
+
+  }
+
+  .header {
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
+  }
+
+  .content {
+    padding: 20px;
+  }
+
+  .ticket {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .ticket img {
+    width: 120px;
+    height: 120px;
+  }
+
+  .details {
+    flex: 1;
+    margin-left: 20px;
+  }
+
+  .details p {
+    margin: 5px 0;
+    font-size: 18px;
+    color: white;
+  }
+
+  .qr-code {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .qr-code img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .footer {
+
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 16px;
+  }
+
+  .reward {
+    background-color: #e0f7fa;
+    padding: 20px;
+    text-align: center;
+    margin: 20px 0;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="header">
+    Booking Details
+  </div>
+  <div class="content">
+    <div class="ticket">
+      <div>
+        <img src="{{ ticket.shows.movi.poster.url }}" alt="Poster">
+      </div>
+      <div class="details">
+        <p><strong>{{ ticket.shows.movi.name }}</strong> &nbsp; {{ticket.shows.movi.genre}}</p>
+        <p>{{ ticket.shows.movi.language }}</p>
+        <p><strong>{{ ticket.shows.date }} | {{ ticket.time }}</strong></p>
+        <p>Krishna cineplex: Pattambi</p>
+        <p>Screen 1 | &nbsp; {{ ticket.seat }}</p>
+        <p><strong>Booking ID:&nbsp;</strong>{{ticket.paymentid}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <strong>Total Amount: Rs.<span style="font-size: 22px;">{{ticket.price}}</span></strong>
+  </div>
+</div>
+{% endblock %}
