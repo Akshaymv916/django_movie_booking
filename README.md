@@ -18,6 +18,13 @@ This project is a movie booking website developed using Python and Django framew
 - **Backend**: Python, Django
 - **Payment Integration**: Razorpay
 
+
+![Description of the image](static/Screenshot_20240803_160141.jpg)
+
+
+![Description of the image](static/Screenshot_20240803_160158.jpg)
+
+
 ## Setup and Installation
 
 1. **Clone the repository**:
